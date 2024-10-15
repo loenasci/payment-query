@@ -1,0 +1,7 @@
+1. Enter the spreadsheet and extract the client's CPF.
+2. Access the CPF consultation website and use the CPF from the spreadsheet to search for the client's payment status.
+3. Check if it is up to date or overdue.
+4. If it is "up to date," get the payment date and payment method.
+5. Otherwise (if overdue), set the status as pending.
+6. Insert this new information (name, amount, CPF, due date, status, and if up to date, payment date, payment method (credit card or boleto)) into a new spreadsheet.
+7. Repeat until reaching the last client.
