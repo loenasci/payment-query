@@ -1,10 +1,12 @@
 import openpyxl
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from pathlib import Path
 from time import sleep
 
 # 1. Enter the spreadsheet and extract the client's CPF.
-client_sheet = openpyxl.load_workbook('dados_clientes.xlsx')
+path_to_file = Path('payment-query') / 'sheets' / 'dados_clientes.xlsx'
+client_sheet = openpyxl.load_workbook(path_to_file)
 client_page = client_sheet['Sheet1']
 
 # 2. Access the CPF consultation website and use the CPF from the spreadsheet to search for the client's payment status.
@@ -34,17 +36,19 @@ for line in client_page.iter_rows(min_row=2, values_only=True):
 		payment_date_only = payment_date.text.split()[3]
 		payment_method_only = metodo_pagamento.text.split()[3]
 
-		results_sheet = openpyxl.load_workbook('planilha_fechamento.xlsx')
+		path_to_file = Path('payment-query') / 'sheets' / 'planilha_fechamento.xlsx'
+		results_sheet = openpyxl.load_workbook(path_to_file)
 		results_page_sheet = results_sheet['Sheet1']
 
 		results_page_sheet.append([name, value, cpf, due_date, 'em dia', payment_date_only, payment_method_only])
 
-		results_sheet.save('planilha_fechamento.xlsx')
+		results_sheet.save(path_to_file)
 	else:
 		# 5. Otherwise (if overdue), set the status as pending.
-		results_sheet = openpyxl.load_workbook('planilha_fechamento.xlsx')
+		path_to_file = Path('payment-query') / 'sheets' / 'planilha_fechamento.xlsx'
+		results_sheet = openpyxl.load_workbook(path_to_file)
 		results_page_sheet = results_sheet['Sheet1']
 
 		results_page_sheet.append([name, value, cpf, due_date, 'pendente'])
-		results_sheet.save('planilha_fechamento.xlsx')
+		results_sheet.save(path_to_file)
 
