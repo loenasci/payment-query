@@ -8,7 +8,7 @@ client_sheet = openpyxl.load_workbook('dados_clientes.xlsx')
 client_page = client_sheet['Sheet1']
 
 # 2. Access the CPF consultation website and use the CPF from the spreadsheet to search for the client's payment status.
-driver = driver = webdriver.Chrome()
+driver = webdriver.Chrome()
 driver.get('https://consultcpf-devaprender.netlify.app/')
 
 for line in client_page.iter_rows(min_row=2, values_only=True):
